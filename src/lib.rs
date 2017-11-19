@@ -1,4 +1,7 @@
+#![feature(fnbox)]
+#![feature(box_patterns)]
+
 pub mod server;
 
-mod http_request;
+pub mod http_request;
 mod thread_pool;
