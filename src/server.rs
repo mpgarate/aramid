@@ -1,9 +1,12 @@
 use std::net::{TcpListener, TcpStream, ToSocketAddrs};
 use std::io::Write;
 
+use std::sync::Arc;
+
 use request::Request;
 use thread_pool::ThreadPool;
 use router::{Route, Router, Handler};
+
 
 pub struct HTTTPServer {
     pool: ThreadPool,
@@ -21,14 +24,14 @@ impl HTTTPServer {
     pub fn listen<A: ToSocketAddrs>(&self, addr: A) {
         let listener = TcpListener::bind(addr).unwrap();
 
+        let router_arc = Arc::new(self.router.clone());
 
         for stream in listener.incoming() {
+            let router = router_arc.clone();
 
-            let router = self.router.clone();
-
-            println!("executing...");
             self.pool.execute(|| {
                 handle_client(stream.unwrap(), router);
+
             });
             println!("executed");
         }
@@ -40,7 +43,7 @@ impl HTTTPServer {
 
 }
 
-fn handle_client(mut stream: TcpStream, router: Router) {
+fn handle_client(mut stream: TcpStream, router: Arc<Router>) {
     let mut request = Request::from_tcp_stream(&stream);
     let route = router.get_route(&request);
     let response_string = route.handle(&mut request).as_http_string();

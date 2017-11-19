@@ -1,4 +1,4 @@
-use chrono::prelude::{DateTime, Utc};
+use chrono::prelude::{Utc};
 
 pub struct Response {
     code: usize,
