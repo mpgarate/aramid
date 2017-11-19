@@ -1,8 +1,10 @@
 use http_request::HTTPRequest;
 
+pub type Handler = fn(&mut HTTPRequest) -> String;
+
 pub struct Route {
     pub path: String,
-    pub handler: fn(&mut HTTPRequest) -> String,
+    pub handler: Handler,
 }
 
 impl Clone for Route {
@@ -12,10 +14,16 @@ impl Clone for Route {
 }
 
 impl Route {
+    pub fn new(path: &str, handler: Handler) -> Route {
+        Route {
+            path: String::from(path),
+            handler: handler,
+        }
+    }
+
     pub fn handle(&self, request: &mut HTTPRequest) -> String {
         (self.handler)(request)
     }
-
 }
 
 #[derive(Clone)]

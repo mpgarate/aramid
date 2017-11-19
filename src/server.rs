@@ -3,7 +3,7 @@ use std::io::Write;
 
 use http_request::HTTPRequest;
 use thread_pool::ThreadPool;
-use router::{Route, Router};
+use router::{Route, Router, Handler};
 
 pub struct HTTTPServer {
     pool: ThreadPool,
@@ -34,8 +34,8 @@ impl HTTTPServer {
         }
     }
 
-    pub fn handle(&mut self, route: Route) {
-        self.router.add_route(route);
+    pub fn handle(&mut self, path: &str, handler: Handler) {
+        self.router.add_route(Route::new(path, handler));
     }
 
 }
