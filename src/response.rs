@@ -41,7 +41,7 @@ impl Response {
     }
 
     fn server(&self) -> String {
-        String::from("Server: HTTTP")
+        String::from("Server: Aramid")
     }
 
     fn accept_ranges(&self) -> String {
@@ -63,17 +63,3 @@ impl Response {
         String::from(TERMINATOR)
     }
 }
-
-/*
- * HTTP/1.1 200 OK
- Date: Mon, 27 Jul 2009 12:28:53 GMT
- Server: Apache
- Last-Modified: Wed, 22 Jul 2009 19:15:56 GMT
- ETag: "34aa387-d-1568eb00"
- Accept-Ranges: bytes
- Content-Length: 51
- Vary: Accept-Encoding
- Content-Type: text/plain
-
- Hello World! My payload includes a trailing CRLF.
- */

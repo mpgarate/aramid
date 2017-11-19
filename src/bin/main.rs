@@ -1,7 +1,7 @@
-extern crate htttp;
-use htttp::server::HTTTPServer;
-use htttp::request::Request;
-use htttp::response::Response;
+extern crate aramid_http;
+use aramid_http::server::AramidServer;
+use aramid_http::request::Request;
+use aramid_http::response::Response;
 
 const NUM_WORKERS: usize = 15;
 
@@ -10,7 +10,7 @@ fn hello_world(_: &mut Request) -> Response {
 }
 
 fn main() {
-    let mut server = HTTTPServer::new(NUM_WORKERS);
+    let mut server = AramidServer::new(NUM_WORKERS);
 
     server.handle(
         "/foo",

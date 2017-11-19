@@ -1,2 +1,2 @@
-# htttp
-HTTP Toy Text Transfer Protocol
+# aramid-http
+Fast and correct web microframework

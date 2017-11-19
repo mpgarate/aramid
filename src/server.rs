@@ -8,14 +8,14 @@ use thread_pool::ThreadPool;
 use router::{Route, Router, Handler};
 
 
-pub struct HTTTPServer {
+pub struct AramidServer {
     pool: ThreadPool,
     router: Router,
 }
 
-impl HTTTPServer {
-    pub fn new(num_workers: usize) -> HTTTPServer {
-        HTTTPServer {
+impl AramidServer {
+    pub fn new(num_workers: usize) -> AramidServer {
+        AramidServer {
             pool: ThreadPool::new(num_workers),
             router: Router::new(),
         }
