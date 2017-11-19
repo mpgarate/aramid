@@ -1,6 +1,7 @@
-use http_request::HTTPRequest;
+use request::Request;
+use response::Response;
 
-pub type Handler = fn(&mut HTTPRequest) -> String;
+pub type Handler = fn(&mut Request) -> Response;
 
 pub struct Route {
     pub path: String,
@@ -21,7 +22,7 @@ impl Route {
         }
     }
 
-    pub fn handle(&self, request: &mut HTTPRequest) -> String {
+    pub fn handle(&self, request: &mut Request) -> Response {
         (self.handler)(request)
     }
 }
@@ -40,7 +41,7 @@ impl Router {
         self.routes.push(Box::new(route));
     }
 
-    pub fn get_route(&self, request: &HTTPRequest) -> Route {
+    pub fn get_route(&self, request: &Request) -> Route {
         (*self.routes.first().unwrap().clone())
     }
 }

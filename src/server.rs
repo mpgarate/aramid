@@ -1,7 +1,7 @@
 use std::net::{TcpListener, TcpStream, ToSocketAddrs};
 use std::io::Write;
 
-use http_request::HTTPRequest;
+use request::Request;
 use thread_pool::ThreadPool;
 use router::{Route, Router, Handler};
 
@@ -41,7 +41,9 @@ impl HTTTPServer {
 }
 
 fn handle_client(mut stream: TcpStream, router: Router) {
-    let mut request = HTTPRequest::from_tcp_stream(&stream);
+    let mut request = Request::from_tcp_stream(&stream);
     let route = router.get_route(&request);
-    let _ = stream.write(route.handle(&mut request).as_bytes());
+    let response_string = route.handle(&mut request).as_http_string();
+
+    let _ = stream.write(response_string.as_bytes());
 }

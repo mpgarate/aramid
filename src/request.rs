@@ -2,12 +2,12 @@ use std::net::TcpStream;
 use std::io::Read;
 
 #[derive(Debug)]
-pub struct HTTPRequest {
+pub struct Request {
     raw_request: String,
 }
 
-impl HTTPRequest {
-    pub fn from_tcp_stream(stream: &TcpStream) -> HTTPRequest {
+impl Request {
+    pub fn from_tcp_stream(stream: &TcpStream) -> Request {
         let mut prev_char: Option<char> = None;
 
         let raw_request = stream.bytes()
@@ -24,7 +24,7 @@ impl HTTPRequest {
             })
         .collect();
 
-        HTTPRequest {
+        Request {
             raw_request: raw_request,
         }
     }

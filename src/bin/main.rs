@@ -1,11 +1,12 @@
 extern crate htttp;
 use htttp::server::HTTTPServer;
-use htttp::http_request::HTTPRequest;
+use htttp::request::Request;
+use htttp::response::Response;
 
 const NUM_WORKERS: usize = 15;
 
-fn hello_world(_: &mut HTTPRequest) -> String {
-    String::from("hello, world")
+fn hello_world(_: &mut Request) -> Response {
+    Response::ok("hello, world")
 }
 
 fn main() {

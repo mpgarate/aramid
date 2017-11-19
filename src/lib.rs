@@ -1,5 +1,7 @@
 pub mod server;
 
-pub mod http_request;
+pub mod request;
+pub mod response;
+
 pub mod router;
 mod thread_pool;
