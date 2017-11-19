@@ -3,6 +3,7 @@ use std::sync::mpsc;
 use std::sync::Arc;
 use std::sync::Mutex;
 
+#[allow(dead_code)]
 pub struct ThreadPool {
     workers: Vec<Worker>,
     sender: mpsc::Sender<Job>,
@@ -34,6 +35,7 @@ impl ThreadPool {
     }
 }
 
+#[allow(dead_code)]
 struct Worker {
     id: usize,
     thread: thread::JoinHandle<()>,
