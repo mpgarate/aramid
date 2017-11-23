@@ -2,17 +2,31 @@ use chrono::prelude::{Utc};
 
 pub struct Response {
     code: usize,
-    body: String,
+    body: Option<String>,
 }
 
 const TERMINATOR: &'static str = "\r\n";
 
-impl Response {
-    pub fn ok(body: &str) -> Response {
+impl From<String> for Response {
+    fn from(body: String) -> Self {
+        Response::from((200, body))
+    }
+}
+
+impl From<(usize, String)> for Response {
+    fn from(t: (usize, String)) -> Self {
+        let (code, body) = t;
+
         Response {
-            code: 200,
-            body: String::from(body),
+            code: code,
+            body: Some(body),
         }
+    }
+}
+
+impl Response {
+    pub fn from<A: Into<Response>>(r: A) -> Response {
+        r.into()
     }
 
     pub fn as_http_string(&self) -> String {
@@ -25,11 +39,15 @@ impl Response {
             self.accept_ranges(),
             self.content_type(),
             self.terminator(),
-            self.body.clone(),
+            self.body().clone(),
             self.terminator(),
         ];
 
         d.join(TERMINATOR)
+    }
+
+    fn body(&self) -> String {
+        self.body.clone().unwrap_or(String::new())
     }
 
     fn date(&self, label: &str) -> String {
@@ -49,7 +67,7 @@ impl Response {
     }
 
     fn content_length(&self) -> String {
-        let body_len = self.body.as_bytes().len();
+        let body_len = self.body().as_bytes().len();
         let term_len = TERMINATOR.len();
 
         format!("Content-Length: {}", body_len + (3 * term_len))

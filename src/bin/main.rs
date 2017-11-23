@@ -10,9 +10,17 @@ fn main() {
 
     server.handle("/foo", {
         fn f(req: &mut Request) -> Response {
-            Response::ok("hello, world")
+            Response::from((200, String::from("hello foo")))
         }; f
     });
+
+    /*
+    server.handle("/bar", {
+        fn f(req: &mut Request) -> Response {
+            Response::from(aramid::status::NoContent)
+        }; f
+    });
+    */
 
     server.listen("127.0.0.1:8080");
 }
