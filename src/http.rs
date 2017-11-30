@@ -15,7 +15,7 @@ impl Server {
 
     pub fn handle(
         &mut self,
-        _: &str,
+        path: &str,
         reader: &mut BufReader<&[u8]>,
         writer: &mut BufWriter<Vec<u8>>) {
 
