@@ -1,5 +1,5 @@
 [package]
-name = "aramid-http"
+name = "aramid"
 version = "0.1.0"
 authors = ["michael <mpgarate@gmail.com>"]
 
